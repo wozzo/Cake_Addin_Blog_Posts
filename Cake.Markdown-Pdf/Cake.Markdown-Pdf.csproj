@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cake.Core, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cake.Core.0.21.1\lib\net45\Cake.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,8 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="IMarkdownPdfRunner.cs" />
+    <Compile Include="MarkdownPdfOrientation.cs" />
+    <Compile Include="MarkdownPdfPaperFormat.cs" />
+    <Compile Include="MarkdownPdfRunner.cs" />
+    <Compile Include="MarkdownPdfRunnerAliases.cs" />
+    <Compile Include="MarkdownPdfRunnerSettings.cs" />
+    <Compile Include="MarkdownPdfRunnerSettingsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
