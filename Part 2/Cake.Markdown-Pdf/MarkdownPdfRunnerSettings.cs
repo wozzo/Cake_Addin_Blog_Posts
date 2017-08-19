@@ -33,7 +33,7 @@ namespace Cake.Markdown_Pdf
             if (LoadTimeout > 0)
                 args.Append($"--load-timeout {LoadTimeout}");
             if (!string.IsNullOrWhiteSpace(OutFilePath))
-                args.Append(OutFilePath);
+                args.Append($"--out {OutFilePath}");
             if (!string.IsNullOrWhiteSpace(FilePath))
                 args.Append(FilePath);
         }
