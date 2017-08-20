@@ -5,6 +5,7 @@ namespace Cake.Markdown_Pdf.Tests
 {
     public class MarkdownPdfRunnerTests
     {
+        private const string TestWorkingDirectory = "testpath/testdir";
         private const string TestFilePath = "testpath/testfile.md";
         private const string TestPhantomPath = "testpath/testphantom";
         private const string TestRunningsPath = "testpath/testrunnings";
@@ -25,6 +26,15 @@ namespace Cake.Markdown_Pdf.Tests
         }
 
         [Fact]
+        public void UseWorkingDirectory_Settings_Should_Not_Use_Arguments_From_MarkdownPdfRunnerSettings()
+        {
+            fixture.RunnerSettings = s => s.UseWorkingDirectory(TestWorkingDirectory);
+            var result = fixture.Run();
+            result.Args.ShouldBe("");
+            result.Process.WorkingDirectory.ToString().ShouldBe($"/Working/{TestWorkingDirectory}");
+        }
+
+        [Fact]
         public void WithFilePath_Settings_Should_Use_Correct_Argument_Provided_In_MarkdownPdfRunnerSettings()
         {
             fixture.RunnerSettings = s => s.WithFilePath(TestFilePath);
@@ -37,7 +47,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithHelp();
             var result = fixture.Run();
-            result.Args.ShouldBe("--help");
+            result.Args.ShouldBe(MarkdownPdfOptions.Help);
         }
 
         [Fact]
@@ -45,7 +55,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithVersion();
             var result = fixture.Run();
-            result.Args.ShouldBe("--version");
+            result.Args.ShouldBe(MarkdownPdfOptions.Version);
         }
 
         [Fact]
@@ -53,7 +63,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithPhantomPath(TestPhantomPath);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--phantom-path {TestPhantomPath}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.PhantomPath} {TestPhantomPath}");
         }
 
         [Fact]
@@ -61,7 +71,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithRunningsPath(TestRunningsPath);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--runnings-path {TestRunningsPath}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.RunningsPath} {TestRunningsPath}");
         }
 
         [Fact]
@@ -69,7 +79,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithCssPath(TestCssPath);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--css-path {TestCssPath}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.CssPath} {TestCssPath}");
         }
 
         [Fact]
@@ -77,7 +87,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithHighlightCssPath(TestHighlightCssPath);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--highlight-css-path {TestHighlightCssPath}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.HighlightCssPath} {TestHighlightCssPath}");
         }
 
         [Fact]
@@ -85,7 +95,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithRemarkableOptions(TestRemarkableOptions);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--remarkable-options {TestRemarkableOptions}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.RemarkableOptions} {TestRemarkableOptions}");
         }
 
         [Theory]
@@ -99,7 +109,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithPaperFormat(paperFormat);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--paper-format {paperFormat}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.PaperFormat} {paperFormat}");
         }
 
         [Fact]
@@ -117,7 +127,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithOrientation(orientation);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--paper-orientation {orientation}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.Orientation} {orientation}");
         }
 
         [Fact]
@@ -133,7 +143,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithPaperBorder(TestPaperBorder);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--paper-border {TestPaperBorder}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.PaperBorder} {TestPaperBorder}");
         }
 
         [Fact]
@@ -141,7 +151,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithRenderDelay(1);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--render-delay 1");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.RenderDelay} 1");
         }
 
         [Fact]
@@ -149,7 +159,7 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithLoadTimeout(2);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--load-timeout 2");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.LoadTimeout} 2");
         }
 
         [Fact]
@@ -157,7 +167,43 @@ namespace Cake.Markdown_Pdf.Tests
         {
             fixture.RunnerSettings = s => s.WithOutFilePath(TestOutFilePath);
             var result = fixture.Run();
-            result.Args.ShouldBe($"--out {TestOutFilePath}");
+            result.Args.ShouldBe($"{MarkdownPdfOptions.OutFilePath} {TestOutFilePath}");
+        }
+
+        [Fact]
+        public void WithAll_Settings_Should_Use_Correct_Arguments_Provided_In_MarkdownPdfRunnerSettings()
+        {
+            fixture.RunnerSettings = s => s
+                .WithHelp()
+                .WithVersion()
+                .WithPhantomPath(TestPhantomPath)
+                .WithRunningsPath(TestRunningsPath)
+                .WithCssPath(TestCssPath)
+                .WithHighlightCssPath(TestHighlightCssPath)
+                .WithRemarkableOptions(TestRemarkableOptions)
+                .WithPaperFormat(MarkdownPdfPaperFormat.A3)
+                .WithOrientation(MarkdownPdfOrientation.Landscape)
+                .WithPaperBorder(TestPaperBorder)
+                .WithRenderDelay(1)
+                .WithLoadTimeout(2)
+                .WithOutFilePath(TestOutFilePath)
+                .WithFilePath(TestFilePath);
+            var result = fixture.Run();
+            result.Args.ShouldBe($"{MarkdownPdfOptions.Help} " +
+                                 $"{MarkdownPdfOptions.Version} " +
+                                 $"{MarkdownPdfOptions.PhantomPath} {TestPhantomPath} " +
+                                 $"{MarkdownPdfOptions.RunningsPath} {TestRunningsPath} " +
+                                 $"{MarkdownPdfOptions.CssPath} {TestCssPath} " +
+                                 $"{MarkdownPdfOptions.HighlightCssPath} {TestHighlightCssPath} " +
+                                 $"{MarkdownPdfOptions.RemarkableOptions} {TestRemarkableOptions} " +
+                                 $"{MarkdownPdfOptions.PaperFormat} A3 " +
+                                 $"{MarkdownPdfOptions.Orientation} Landscape " +
+                                 $"{MarkdownPdfOptions.PaperBorder} {TestPaperBorder} " +
+                                 $"{MarkdownPdfOptions.RenderDelay} 1 " +
+                                 $"{MarkdownPdfOptions.LoadTimeout} 2 " +
+                                 $"{MarkdownPdfOptions.OutFilePath} {TestOutFilePath} " +
+                                 $"{TestFilePath}"
+                                 );
         }
     }
 }

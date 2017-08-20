@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMarkdownPdfRunner.cs" />
+    <Compile Include="MarkdownPdfOptions.cs" />
     <Compile Include="MarkdownPdfOrientation.cs" />
     <Compile Include="MarkdownPdfPaperFormat.cs" />
     <Compile Include="MarkdownPdfRunner.cs" />

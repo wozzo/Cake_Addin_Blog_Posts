@@ -9,31 +9,31 @@ namespace Cake.Markdown_Pdf
         internal void Evaluate(ProcessArgumentBuilder args)
         {
             if (Help)
-                args.Append("--help");
+                args.Append(MarkdownPdfOptions.Help);
             if (Version)
-                args.Append("--version");
+                args.Append($"{MarkdownPdfOptions.Version}");
             if (!string.IsNullOrWhiteSpace(PhantomPath))
-                args.Append($"--phantom-path {PhantomPath}");
+                args.Append($"{MarkdownPdfOptions.PhantomPath} {PhantomPath}");
             if (!string.IsNullOrWhiteSpace(RunningsPath))
-                args.Append($"--runnings-path {RunningsPath}");
+                args.Append($"{MarkdownPdfOptions.RunningsPath} {RunningsPath}");
             if (!string.IsNullOrWhiteSpace(CssPath))
-                args.Append($"--css-path {CssPath}");
+                args.Append($"{MarkdownPdfOptions.CssPath} {CssPath}");
             if (!string.IsNullOrWhiteSpace(HighlightCssPath))
-                args.Append($"--highlight-css-path {HighlightCssPath}");
+                args.Append($"{MarkdownPdfOptions.HighlightCssPath} {HighlightCssPath}");
             if (!string.IsNullOrWhiteSpace(RemarkableOptions))
-                args.Append($"--remarkable-options {RemarkableOptions}");
+                args.Append($"{MarkdownPdfOptions.RemarkableOptions} {RemarkableOptions}");
             if (PaperFormat != MarkdownPdfPaperFormat.None)
-                args.Append($"--paper-format {PaperFormat}");
+                args.Append($"{MarkdownPdfOptions.PaperFormat} {PaperFormat}");
             if (Orientation != MarkdownPdfOrientation.None)
-                args.Append($"--paper-orientation {Orientation}");
+                args.Append($"{MarkdownPdfOptions.Orientation} {Orientation}");
             if (!string.IsNullOrWhiteSpace(PaperBorder))
-                args.Append($"--paper-border {PaperBorder}");
+                args.Append($"{MarkdownPdfOptions.PaperBorder} {PaperBorder}");
             if (RenderDelay > 0)
-                args.Append($"--render-delay {RenderDelay}");
+                args.Append($"{MarkdownPdfOptions.RenderDelay} {RenderDelay}");
             if (LoadTimeout > 0)
-                args.Append($"--load-timeout {LoadTimeout}");
+                args.Append($"{MarkdownPdfOptions.LoadTimeout} {LoadTimeout}");
             if (!string.IsNullOrWhiteSpace(OutFilePath))
-                args.Append($"--out {OutFilePath}");
+                args.Append($"{MarkdownPdfOptions.OutFilePath} {OutFilePath}");
             if (!string.IsNullOrWhiteSpace(FilePath))
                 args.Append(FilePath);
         }
